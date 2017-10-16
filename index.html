@@ -7,37 +7,35 @@
 <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css"/>
 </head>
 <body>
-<a href="javascript:;" class="weui-btn weui-btn_primary">页面主操作 Normal</a>
-<a href="javascript:;" class="weui-btn weui-btn_disabled weui-btn_primary">页面主操作 Disabled</a>
-<a href="javascript:;" class="weui-btn weui-btn_default">页面次要操作 Normal</a>
-<a href="javascript:;" class="weui-btn weui-btn_disabled weui-btn_default">页面次要操作 Disabled</a>
-<a href="javascript:;" class="weui-btn weui-btn_warn">警告类操作 Normal</a>
-<a href="javascript:;" class="weui-btn weui-btn_disabled weui-btn_warn">警告类操作 Disabled</a>
-
-<div class="button-sp-area">
-    <a href="javascript:;" class="weui-btn weui-btn_plain-default">按钮</a>
-    <a href="javascript:;" class="weui-btn weui-btn_plain-default weui-btn_plain-disabled">按钮</a>
-    <a href="javascript:;" class="weui-btn weui-btn_plain-primary">按钮</a>
-    <a href="javascript:;" class="weui-btn weui-btn_plain-primary weui-btn_plain-disabled">按钮</a>
-    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_primary">按钮</a>
-    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_default">按钮</a>
-    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_warn">按钮</a>
-</div>
-<div id="actionSheet_wrap">
-    <div class="weui-mask_transparent actionsheet__mask" id="mask"></div>
-    <div class="weui-actionsheet" id="weui-actionsheet">
-        <div class="weui-actionsheet__menu">
-            <div class="weui-actionsheet__cell">示例菜单</div>
-            <div class="weui-actionsheet__cell">示例菜单</div>
-            <div class="weui-actionsheet__cell">示例菜单</div>
-            <div class="weui-actionsheet__cell">示例菜单</div>
-        </div>
-        <div class="weui-actionsheet__action">
-            <div class="weui-actionsheet__cell" id="actionsheet_cancel">取消</div>
+<div class="page">
+    <div class="page__hd">
+        <h1 class="page__title">ActionSheet</h1>
+        <p class="page__desc">弹出式菜单</p>
+    </div>
+    <div class="page__bd page__bd_spacing">
+        <a href="javascript:;" class="weui-btn weui-btn_default" id="showIOSActionSheet">iOS ActionSheet</a>
+        <a href="javascript:;" class="weui-btn weui-btn_default" id="showAndroidActionSheet">Android ActionSheet</a>
+    </div>
+    <!--BEGIN actionSheet-->
+    <div>
+        <div class="weui-mask" id="iosMask" style="display: none"></div>
+        <div class="weui-actionsheet" id="iosActionsheet">
+            <div class="weui-actionsheet__title">
+                <p class="weui-actionsheet__title-text">这是一个标题，可以为一行或者两行。</p>
+            </div>
+            <div class="weui-actionsheet__menu">
+                <div class="weui-actionsheet__cell">示例菜单</div>
+                <div class="weui-actionsheet__cell">示例菜单</div>
+                <div class="weui-actionsheet__cell">示例菜单</div>
+                <div class="weui-actionsheet__cell">示例菜单</div>
+            </div>
+            <div class="weui-actionsheet__action">
+                <div class="weui-actionsheet__cell" id="iosActionsheetCancel">取消</div>
+            </div>
         </div>
     </div>
 
-    <div class="weui-skin_android" id="weui-android-actionsheet" style="display: none">
+    <div class="weui-skin_android" id="androidActionsheet" style="display: none">
         <div class="weui-mask"></div>
         <div class="weui-actionsheet">
             <div class="weui-actionsheet__menu">
@@ -47,6 +45,42 @@
             </div>
         </div>
     </div>
+    <!--END actionSheet-->
 </div>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://res.wx.qq.com/open/libs/weuijs/1.1.2/weui.min.js"></script>
+<script type="text/javascript">
+    weui.alert('弹出框-weui.js');
+    // ios
+    $(function(){
+        var $iosActionsheet = $('#iosActionsheet');
+        var $iosMask = $('#iosMask');
+
+        function hideActionSheet() {
+            $iosActionsheet.removeClass('weui-actionsheet_toggle');
+            $iosMask.fadeOut(200);
+        }
+
+        $iosMask.on('click', hideActionSheet);
+        $('#iosActionsheetCancel').on('click', hideActionSheet);
+        $("#showIOSActionSheet").on("click", function(){
+            $iosActionsheet.addClass('weui-actionsheet_toggle');
+            $iosMask.fadeIn(200);
+        });
+    });
+
+    // android
+    $(function(){
+        var $androidActionSheet = $('#androidActionsheet');
+        var $androidMask = $androidActionSheet.find('.weui-mask');
+
+        $("#showAndroidActionSheet").on('click', function(){
+            $androidActionSheet.fadeIn(200);
+            $androidMask.on('click',function () {
+                $androidActionSheet.fadeOut(200);
+            });
+        });
+    });
+</script>
 </body>
 </html>
